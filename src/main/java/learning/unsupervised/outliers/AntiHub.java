@@ -51,7 +51,9 @@ public class AntiHub extends OutlierDetector implements NSFUserInterface {
     // Neighborhood size.
     private int k;
     private float outlierRatio = DEFAULT_OUTLIER_RATIO;
-    
+
+    private AntihubResult result;
+
     /**
      * Default empty constructor.
      */
@@ -166,7 +168,11 @@ public class AntiHub extends OutlierDetector implements NSFUserInterface {
     public void setOutlierRatio(float outlierRatio) {
         this.outlierRatio = outlierRatio;
     }
-    
+
+    public float getOutlierRatio() {
+        return outlierRatio;
+    }
+
     /**
      * @param alphaStep Float value that is the step to use in parameter search. 
      */
@@ -324,5 +330,40 @@ public class AntiHub extends OutlierDetector implements NSFUserInterface {
             }
         }
         setOutlierIndexes(outlierIndexes, outlierScores);
-    } 
+
+        this.result = new AntihubResult(maxOutlierScore,bestNumDistinct,outlierRatio,size);
+    }
+
+    public AntihubResult getResult() {
+        return result;
+    }
+
+
+    public class AntihubResult {
+        private final int bestNumDistinct;
+        private final float outlierRatio;
+        private final float maxOutlierScore;
+        private final int size;
+
+        public AntihubResult(float maxOutlierScore, int bestNumDistinct, float outlierRatio, int size) {
+            this.maxOutlierScore = maxOutlierScore;
+            this.bestNumDistinct = bestNumDistinct;
+            this.outlierRatio = outlierRatio;
+            this.size = size;
+        }
+
+        public int getBestNumDistinct() {
+            return bestNumDistinct;
+        }
+
+        public float getOutlierRatio() {
+            return outlierRatio;
+        }
+
+        public double getDistScore(){
+            return Double.valueOf(bestNumDistinct) / (size*outlierRatio);
+        }
+
+
+    }
 }

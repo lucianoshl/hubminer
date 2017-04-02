@@ -51,6 +51,8 @@ public class DataInstance implements Serializable {
     // represented as a data instance.
     private DataInstance identifier = null;
 
+    private int id = -1;
+
     /**
      * Noise is marked by having -1 label.
      *
@@ -677,5 +679,13 @@ public class DataInstance implements Serializable {
             }
         }
         return true;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

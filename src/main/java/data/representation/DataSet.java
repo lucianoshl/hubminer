@@ -1451,17 +1451,24 @@ public class DataSet implements Serializable {
     public void normalizeFloats() {
         if (hasFloatAttr()) {
             float[] maxVal = new float[getNumFloatAttr()];
+            float[] minVal = new float[getNumFloatAttr()];
+
             for (int i = 0; i < maxVal.length; i++) {
                 maxVal[i] = -Float.MAX_VALUE;
+                minVal[i] = Float.MAX_VALUE;
             }
+
             DataInstance instance;
             for (int i = 0; i < size(); i++) {
                 instance = data.get(i);
                 for (int j = 0; j < getNumFloatAttr(); j++) {
                     if (DataMineConstants.isAcceptableFloat(
                             instance.fAttr[j])) {
-                        if (Math.abs(instance.fAttr[j]) > maxVal[j]) {
+                        if (instance.fAttr[j] > maxVal[j]) {
                             maxVal[j] = instance.fAttr[j];
+                        }
+                        if (instance.fAttr[j] < minVal[j]) {
+                            minVal[j] = instance.fAttr[j];
                         }
                     }
                 }
@@ -1471,8 +1478,8 @@ public class DataSet implements Serializable {
                 for (int j = 0; j < getNumFloatAttr(); j++) {
                     if (DataMineConstants.isAcceptableFloat(
                             instance.fAttr[j])) {
-                        if (maxVal[j] != 0) {
-                            instance.fAttr[j] /= maxVal[j];
+                        if (maxVal[j] - minVal[j] != 0){
+                            instance.fAttr[j] = (instance.fAttr[j] - minVal[j])/(maxVal[j] - minVal[j]);
                         }
                     }
                 }
