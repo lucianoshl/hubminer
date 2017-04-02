@@ -8,10 +8,12 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
+  
   <scm>
-    <developerConnection>scm:git@github.com:lucianoshl/hubminer.git</developerConnection>
-  </scm>
+		<url>https://github.com/lucianoshl/hubminer</url>
+		<connection>scm:git:git://github.com/lucianoshl/hubminer.git</connection>
+		<developerConnection>scm:git:git@github.com/lucianoshl/hubminer.git</developerConnection>
+	</scm>
 
   <!-- an incredible mess of dependencies onto old versions -->
   <!-- use at your own risk! -->
